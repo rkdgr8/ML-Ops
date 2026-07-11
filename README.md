@@ -7,10 +7,10 @@ End-to-end MLOps project for predicting heart disease risk using the UCI Heart D
 This repository is being built step by step.
 
 Current step:
-- Exploratory data analysis script added
+- Model training workflow added
 
 Next step:
-- Build preprocessing and model training pipelines
+- Add MLflow experiment tracking
 
 ## Planned Workflow
 
@@ -77,4 +77,22 @@ screenshots/eda/feature_histograms.png
 screenshots/eda/correlation_heatmap.png
 screenshots/eda/missing_values.png
 screenshots/eda/age_vs_thalach.png
+```
+
+## Model Training
+
+Train Logistic Regression and Random Forest pipelines, tune them with
+cross-validation, evaluate the best model, and save the fitted pipeline:
+
+```bash
+python -m src.train
+```
+
+This creates:
+
+```text
+models/heart_disease_pipeline.joblib
+reports/model_metrics.json
+screenshots/model/confusion_matrix.png
+screenshots/model/roc_curve.png
 ```
