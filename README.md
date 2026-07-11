@@ -7,10 +7,10 @@ End-to-end MLOps project for predicting heart disease risk using the UCI Heart D
 This repository is being built step by step.
 
 Current step:
-- Project structure created
+- Data acquisition script added
 
 Next step:
-- Download or load the Heart Disease UCI dataset
+- Run data acquisition and start exploratory data analysis
 
 ## Planned Workflow
 
@@ -46,4 +46,17 @@ reports/               Final report files
 pip install -r requirements.txt
 ```
 
-More detailed setup instructions will be added as the project develops.
+## Data Acquisition
+
+Download, clean, and save the UCI Cleveland Heart Disease dataset:
+
+```bash
+python -m src.data_processing
+```
+
+This creates:
+
+```text
+data/raw/heart.csv
+data/processed/heart_processed.csv
+```
