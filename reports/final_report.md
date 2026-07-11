@@ -296,10 +296,36 @@ Kubernetes manifests are provided in the `k8s/` directory:
 ```text
 k8s/deployment.yaml
 k8s/service.yaml
+k8s/README.md
 ```
 
 The deployment manifest runs the API container, and the service manifest exposes
 it through a load balancer style service.
+
+The deployment includes:
+
+- one API replica
+- container port `8000`
+- readiness probe on `/health`
+- liveness probe on `/health`
+- CPU and memory requests/limits
+- service routing from port `80` to container port `8000`
+
+Local deployment commands:
+
+```bash
+docker build -t heart-disease-api:latest .
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl get pods
+kubectl get services
+```
+
+If the service is not directly reachable, port-forward it:
+
+```bash
+kubectl port-forward service/heart-disease-api-service 8000:80
+```
 
 TODO: Add deployment screenshot after running in Minikube or Docker Desktop
 Kubernetes.
