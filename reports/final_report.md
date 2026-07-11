@@ -285,6 +285,7 @@ The workflow performs:
 - dependency installation
 - linting with Ruff
 - unit testing with Pytest
+- Docker image build validation
 
 TODO: Add GitHub Actions screenshot after CI runs successfully.
 
