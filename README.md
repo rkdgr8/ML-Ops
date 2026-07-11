@@ -7,10 +7,10 @@ End-to-end MLOps project for predicting heart disease risk using the UCI Heart D
 This repository is being built step by step.
 
 Current step:
-- Model training workflow added
+- MLflow experiment tracking added
 
 Next step:
-- Add MLflow experiment tracking
+- Improve API serving, logging, and container workflow
 
 ## Planned Workflow
 
@@ -95,4 +95,22 @@ models/heart_disease_pipeline.joblib
 reports/model_metrics.json
 screenshots/model/confusion_matrix.png
 screenshots/model/roc_curve.png
+```
+
+The training script also logs model runs to MLflow under:
+
+```text
+heart-disease-classification
+```
+
+View the tracking UI:
+
+```bash
+mlflow ui
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5000
 ```

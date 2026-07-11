@@ -1,10 +1,16 @@
 """Model training and evaluation entry point."""
 
 import json
+import os
 from pathlib import Path
 
 import joblib
 import matplotlib.pyplot as plt
+
+os.environ.setdefault("GIT_PYTHON_REFRESH", "quiet")
+
+import mlflow
+import mlflow.sklearn
 import pandas as pd
 import seaborn as sns
 from sklearn.compose import ColumnTransformer
@@ -23,7 +29,12 @@ from sklearn.model_selection import GridSearchCV, cross_val_score, train_test_sp
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.config import MODEL_METRICS_PATH, MODEL_OUTPUT_DIR, MODEL_PATH
+from src.config import (
+    MLFLOW_EXPERIMENT_NAME,
+    MODEL_METRICS_PATH,
+    MODEL_OUTPUT_DIR,
+    MODEL_PATH,
+)
 from src.eda import load_or_prepare_processed_data
 
 
@@ -182,6 +193,54 @@ def save_training_outputs(
     metrics_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
 
 
+def log_model_run(
+    model_name: str,
+    model: Pipeline,
+    result: dict,
+    is_best: bool,
+) -> None:
+    """Log one trained model run to MLflow."""
+    with mlflow.start_run(run_name=model_name):
+        mlflow.set_tag("model_name", model_name)
+        mlflow.set_tag("is_best_model", str(is_best))
+        mlflow.log_params(result["best_params"])
+        mlflow.log_metric(
+            "cross_val_roc_auc_mean",
+            result["cross_val_roc_auc_mean"],
+        )
+        mlflow.log_metric(
+            "cross_val_roc_auc_std",
+            result["cross_val_roc_auc_std"],
+        )
+
+        for metric_name, metric_value in result["test_metrics"].items():
+            mlflow.log_metric(f"test_{metric_name}", metric_value)
+
+        mlflow.sklearn.log_model(model, artifact_path="model")
+
+        if is_best:
+            mlflow.log_artifact(str(MODEL_OUTPUT_DIR / "confusion_matrix.png"))
+            mlflow.log_artifact(str(MODEL_OUTPUT_DIR / "roc_curve.png"))
+            mlflow.log_artifact(str(MODEL_METRICS_PATH))
+
+
+def log_experiment_runs(
+    fitted_models: dict[str, Pipeline],
+    summary: dict,
+    best_name: str,
+) -> None:
+    """Log all model comparison results to MLflow."""
+    mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
+
+    for model_name, model in fitted_models.items():
+        log_model_run(
+            model_name=model_name,
+            model=model,
+            result=summary["models"][model_name],
+            is_best=model_name == best_name,
+        )
+
+
 def train_models(data: pd.DataFrame) -> tuple[str, Pipeline, dict]:
     """Train candidate models and return the best one by ROC-AUC."""
     x, y = split_features_target(data)
@@ -197,10 +256,12 @@ def train_models(data: pd.DataFrame) -> tuple[str, Pipeline, dict]:
     best_name = ""
     best_model = None
     best_roc_auc = -1.0
+    fitted_models = {}
 
     for name, search in build_model_searches().items():
         search.fit(x_train, y_train)
         model = search.best_estimator_
+        fitted_models[name] = model
         test_metrics = evaluate_model(model, x_test, y_test)
         cross_val_auc = cross_val_score(
             model,
@@ -234,6 +295,7 @@ def train_models(data: pd.DataFrame) -> tuple[str, Pipeline, dict]:
     save_confusion_matrix(best_model, x_test, y_test)
     save_roc_curve(best_model, x_test, y_test)
     save_training_outputs(best_model, summary)
+    log_experiment_runs(fitted_models, summary, best_name)
 
     return best_name, best_model, summary
 
@@ -246,6 +308,7 @@ def main() -> None:
     print(f"Best model: {best_name}")
     print(f"Saved model to: {MODEL_PATH}")
     print(f"Saved metrics to: {MODEL_METRICS_PATH}")
+    print(f"MLflow experiment: {MLFLOW_EXPERIMENT_NAME}")
     print(json.dumps(summary, indent=2))
 
 

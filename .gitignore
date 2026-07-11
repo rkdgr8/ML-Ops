@@ -6,6 +6,7 @@ __pycache__/
 venv/
 env/
 mlruns/
+mlflow.db*
 *.log
 models/*.pkl
 models/*.joblib
