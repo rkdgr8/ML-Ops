@@ -75,7 +75,17 @@ python -m src.data_processing
 
 The EDA workflow is implemented in `src/eda.py`.
 
-Planned EDA outputs:
+The cleaned dataset contains 297 rows and 14 columns after removing records with
+missing values. No missing values remain in the processed dataset.
+
+Target distribution:
+
+| Target | Meaning | Count |
+| --- | --- | ---: |
+| 0 | No heart disease | 160 |
+| 1 | Heart disease present | 137 |
+
+EDA outputs generated:
 
 - class distribution plot
 - numeric feature histograms
@@ -89,17 +99,25 @@ Command used:
 python -m src.eda
 ```
 
-EDA screenshot placeholders:
+Class distribution:
 
-```text
-screenshots/eda/class_distribution.png
-screenshots/eda/feature_histograms.png
-screenshots/eda/correlation_heatmap.png
-screenshots/eda/missing_values.png
-screenshots/eda/age_vs_thalach.png
-```
+![Class Distribution](../screenshots/eda/class_distribution.png)
 
-TODO: Add generated EDA screenshots after running the EDA script.
+Numeric feature distributions:
+
+![Feature Histograms](../screenshots/eda/feature_histograms.png)
+
+Correlation heatmap:
+
+![Correlation Heatmap](../screenshots/eda/correlation_heatmap.png)
+
+Missing value analysis:
+
+![Missing Values](../screenshots/eda/missing_values.png)
+
+Age versus maximum heart rate:
+
+![Age vs Maximum Heart Rate](../screenshots/eda/age_vs_thalach.png)
 
 ## 5. Model Development
 
@@ -190,7 +208,7 @@ MLflow UI URL:
 http://127.0.0.1:5000
 ```
 
-TODO: Add MLflow UI screenshot after running the MLflow UI.
+The MLflow UI can be used to inspect and compare the logged experiment runs.
 
 ## 8. API Serving
 
@@ -228,7 +246,8 @@ Example response:
 }
 ```
 
-TODO: Add Swagger UI/API test screenshot.
+The API was tested locally through Docker using `/health`, `/predict`, and
+`/metrics`.
 
 ## 9. Testing
 
@@ -241,6 +260,7 @@ Unit tests were added for:
 - MLflow logging orchestration
 - API health check
 - API prediction response contract
+- Prometheus metrics endpoint
 
 Test command:
 
@@ -252,6 +272,12 @@ Docker-based test command:
 
 ```bash
 docker run --rm -v "D:\BITS\courses\sem3\MLOps\Assigment:/app" -w /app heart-disease-api pytest
+```
+
+Latest Docker-based local test result:
+
+```text
+9 passed, 1 warning
 ```
 
 ## 10. Containerization
@@ -272,7 +298,15 @@ docker run --rm -p 8000:8000 heart-disease-api
 
 The container exposes the FastAPI service on port `8000`.
 
-TODO: Add Docker build/run screenshot.
+Local container validation was completed using:
+
+```text
+GET /health
+POST /predict
+GET /metrics
+```
+
+The Docker container was run locally and exposed the service on port `8000`.
 
 ## 11. CI/CD
 
@@ -287,7 +321,7 @@ The workflow performs:
 - unit testing with Pytest
 - Docker image build validation
 
-TODO: Add GitHub Actions screenshot after CI runs successfully.
+The CI workflow is triggered on push and pull request events.
 
 ## 12. Deployment
 
@@ -327,8 +361,16 @@ If the service is not directly reachable, port-forward it:
 kubectl port-forward service/heart-disease-api-service 8000:80
 ```
 
-TODO: Add deployment screenshot after running in Minikube or Docker Desktop
-Kubernetes.
+Kubernetes deployment could not be executed locally at this stage because no
+active Kubernetes context was configured on the machine:
+
+```text
+kubectl config current-context
+error: current-context is not set
+```
+
+Docker Desktop Kubernetes or Minikube should be enabled before final submission
+to capture pod and service evidence screenshots.
 
 ## 13. Monitoring and Logging
 
@@ -347,8 +389,16 @@ Metrics endpoint:
 http://127.0.0.1:8000/metrics
 ```
 
-TODO: Add API logs or metrics endpoint screenshot. Optional future enhancement:
-connect Prometheus and Grafana for dashboard screenshots.
+The `/metrics` endpoint provides Prometheus-compatible metrics. Optional future
+enhancement: connect Prometheus and Grafana for dashboard screenshots.
+
+Example metrics exposed:
+
+```text
+api_requests_total
+api_request_latency_seconds
+model_predictions_total
+```
 
 ## 14. Conclusion
 
@@ -360,7 +410,24 @@ tests, and deployment manifests.
 The Logistic Regression model achieved the best ROC-AUC score on the test set
 and was selected as the final production model.
 
-## 15. Appendix
+## 15. Evidence To Attach Before Final Submission
+
+The implementation is complete for the major MLOps components. Before final PDF
+submission, attach the following screenshots in the relevant sections:
+
+| Evidence | Status |
+| --- | --- |
+| EDA plots | Generated in `screenshots/eda/` |
+| Model confusion matrix and ROC curve | Generated in `screenshots/model/` |
+| MLflow experiment UI | Capture after running `mlflow ui` |
+| Swagger UI `/docs` | Capture while API container is running |
+| `/predict` response | Capture cURL/Postman/Swagger response |
+| `/metrics` endpoint | Capture browser/cURL output |
+| Docker running container | Capture Docker Desktop or `docker ps` |
+| GitHub Actions successful CI run | Capture from GitHub Actions tab |
+| Kubernetes pods/services | Capture after enabling local Kubernetes |
+
+## 16. Appendix
 
 Repository:
 
