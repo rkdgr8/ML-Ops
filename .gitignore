@@ -15,4 +15,6 @@ data/processed/
 !data/.gitkeep
 !models/.gitkeep
 !screenshots/.gitkeep
+!screenshots/eda/
+!screenshots/eda/*.png
 !reports/.gitkeep

@@ -12,5 +12,8 @@ def health_check():
 @app.post("/predict")
 def predict():
     return {
-        "message": "Prediction endpoint scaffolded. Model inference will be added later."
+        "message": (
+            "Prediction endpoint scaffolded. "
+            "Model inference will be added later."
+        )
     }

@@ -58,7 +58,10 @@ def clean_dataset(data: pd.DataFrame) -> pd.DataFrame:
     return cleaned
 
 
-def save_processed_dataset(data: pd.DataFrame, output_path: Path = PROCESSED_DATA_PATH) -> Path:
+def save_processed_dataset(
+    data: pd.DataFrame,
+    output_path: Path = PROCESSED_DATA_PATH,
+) -> Path:
     """Save the cleaned dataset for EDA and model training."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     data.to_csv(output_path, index=False)

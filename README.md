@@ -7,10 +7,10 @@ End-to-end MLOps project for predicting heart disease risk using the UCI Heart D
 This repository is being built step by step.
 
 Current step:
-- Data acquisition script added
+- Exploratory data analysis script added
 
 Next step:
-- Run data acquisition and start exploratory data analysis
+- Build preprocessing and model training pipelines
 
 ## Planned Workflow
 
@@ -59,4 +59,22 @@ This creates:
 ```text
 data/raw/heart.csv
 data/processed/heart_processed.csv
+```
+
+## Exploratory Data Analysis
+
+Generate the required EDA plots:
+
+```bash
+python -m src.eda
+```
+
+This creates:
+
+```text
+screenshots/eda/class_distribution.png
+screenshots/eda/feature_histograms.png
+screenshots/eda/correlation_heatmap.png
+screenshots/eda/missing_values.png
+screenshots/eda/age_vs_thalach.png
 ```
