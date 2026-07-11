@@ -210,9 +210,17 @@ http://127.0.0.1:5000
 
 The MLflow UI can be used to inspect and compare the logged experiment runs.
 
-Screenshot placeholder:
+MLflow training runs:
 
-![MLflow Experiment UI](../screenshots/mlflow/mlflow_experiment_ui.png)
+![MLflow Training Runs](../screenshots/mlflow/training_runs.png)
+
+Random Forest run details:
+
+![MLflow Random Forest Run](../screenshots/mlflow/random_forest_run.png)
+
+Logged model artifacts:
+
+![MLflow Model Artifacts](../screenshots/mlflow/model_artifacts.png)
 
 ## 8. API Serving
 
@@ -253,13 +261,13 @@ Example response:
 The API was tested locally through Docker using `/health`, `/predict`, and
 `/metrics`.
 
-Swagger UI screenshot placeholder:
+Swagger UI:
 
-![Swagger UI](../screenshots/api/swagger_ui.png)
+![Swagger UI](../screenshots/swagger/swagger_docs.png)
 
-Prediction response screenshot placeholder:
+Prediction example in Swagger:
 
-![Prediction Response](../screenshots/api/predict_response.png)
+![Swagger Prediction Request](../screenshots/swagger/swagger_example_request.png)
 
 ## 9. Testing
 
@@ -339,9 +347,9 @@ The workflow performs:
 
 The CI workflow is triggered on push and pull request events.
 
-GitHub Actions screenshot placeholder:
+GitHub Actions CI result:
 
-![GitHub Actions CI](../screenshots/ci/github_actions_success.png)
+![GitHub Actions CI](../screenshots/ci/ci.png)
 
 ## 12. Deployment
 
@@ -392,11 +400,9 @@ error: current-context is not set
 Docker Desktop Kubernetes or Minikube should be enabled before final submission
 to capture pod and service evidence screenshots.
 
-Kubernetes deployment screenshot placeholders:
+Kubernetes deployment screenshot:
 
-![Kubernetes Pods](../screenshots/kubernetes/kubectl_get_pods.png)
-
-![Kubernetes Services](../screenshots/kubernetes/kubectl_get_services.png)
+![Kubernetes Deployment](../screenshots/k8s/k8s.png)
 
 ## 13. Monitoring and Logging
 
@@ -426,9 +432,9 @@ api_request_latency_seconds
 model_predictions_total
 ```
 
-Metrics endpoint screenshot placeholder:
+Metrics endpoint:
 
-![Metrics Endpoint](../screenshots/monitoring/metrics_endpoint.png)
+![Metrics Endpoint](../screenshots/metrics/metrics.png)
 
 ## 14. Conclusion
 
@@ -449,13 +455,13 @@ submission, attach the following screenshots in the relevant sections:
 | --- | --- |
 | EDA plots | Generated in `screenshots/eda/` |
 | Model confusion matrix and ROC curve | Generated in `screenshots/model/` |
-| MLflow experiment UI | Save as `screenshots/mlflow/mlflow_experiment_ui.png` |
-| Swagger UI `/docs` | Save as `screenshots/api/swagger_ui.png` |
-| `/predict` response | Save as `screenshots/api/predict_response.png` |
-| `/metrics` endpoint | Save as `screenshots/monitoring/metrics_endpoint.png` |
-| Docker running container | Save as `screenshots/docker/docker_container.png` |
-| GitHub Actions successful CI run | Save as `screenshots/ci/github_actions_success.png` |
-| Kubernetes pods/services | Save in `screenshots/kubernetes/` |
+| MLflow experiment UI | Added in `screenshots/mlflow/` |
+| Swagger UI `/docs` | Added in `screenshots/swagger/swagger_docs.png` |
+| `/predict` response | Added in `screenshots/swagger/swagger_example_request.png` |
+| `/metrics` endpoint | Added in `screenshots/metrics/metrics.png` |
+| Docker running container | Added in `screenshots/docker/docker_container.png` |
+| GitHub Actions successful CI run | Added in `screenshots/ci/ci.png` |
+| Kubernetes pods/services | Added in `screenshots/k8s/k8s.png` |
 
 ## 16. Appendix
 
