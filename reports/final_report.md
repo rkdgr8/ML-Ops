@@ -311,12 +311,18 @@ Current monitoring support includes:
 - API health check endpoint
 - prediction request validation through FastAPI/Pydantic
 - container logs through Docker
+- request logging middleware
+- Prometheus-compatible `/metrics` endpoint
+- request count, request latency, and prediction count metrics
 
-Planned monitoring additions:
+Metrics endpoint:
 
-- structured API request logging
-- Prometheus-compatible metrics endpoint
-- optional Grafana dashboard screenshot
+```text
+http://127.0.0.1:8000/metrics
+```
+
+TODO: Add API logs or metrics endpoint screenshot. Optional future enhancement:
+connect Prometheus and Grafana for dashboard screenshots.
 
 ## 14. Conclusion
 
