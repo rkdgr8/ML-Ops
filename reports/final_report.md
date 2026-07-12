@@ -474,7 +474,7 @@ https://github.com/rkdgr8/ML-Ops
 Demo video:
 
 ```text
-https://drive.google.com/file/d/10Tf_SN1QJ6JIZ3V4gYB6UTBJjmSwdgVF/view?usp=drive_link
+https://drive.google.com/file/d/10Tf_SN1QJ6JIZ3V4gYB6UTBJjmSwdgVF/view?usp=sharing
 ```
 
 Important commands:
